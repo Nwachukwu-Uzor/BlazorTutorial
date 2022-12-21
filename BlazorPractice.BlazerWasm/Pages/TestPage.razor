@@ -1,0 +1,96 @@
+﻿@page "/testpage"
+<h3>TestPage</h3>
+<p>Id: @person.Id</p>
+<p>Name: @person.Name</p>
+@foreach (var item in person.Items)
+{
+    <p>@item</p>
+}
+@if (@person.IsActive)
+{
+    <h4 class="text-success">User is active</h4>
+}
+else
+{
+    <h4 class="text-danger">The user is inactive</h4>
+}
+<p class="@(person.IsActive ? "text-primary" : "text-danger") lead">The user is @(person.IsActive ? "active" : "inactive")</p>
+<hr />
+<h4>Details</h4>
+<form>
+    <input type="text" @bind-value="person.Name" @bind-value:event="oninput" />
+    <input type="checkbox" @bind-value="person.IsActive" @bind-value:event="onchange" />
+    <div class="form-control">
+        <input type="radio" name="group" value="1" @onclick="() => selectedValue = 1" checked="@(selectedValue == 1)"/>
+        <input type="radio" name="group" value="2" @onclick="() => selectedValue = 2" checked="@(selectedValue == 2)" />
+    </div>
+</form>
+<br />
+@selectedValue
+<div class="my-3">
+    <h1>Selected Location Id: @selectLocationId</h1>
+    <select @bind="selectLocationId">
+        @foreach(var location in locations)
+        {
+            <option value="@location.Id">@location.Name</option>
+        }
+    </select>
+</div>
+
+@code {
+    private Person person = null;
+    private List<Location> locations;
+    private int selectedValue = 0;
+    private int selectLocationId = 0;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        person = new Person
+            {
+                Id = 1,
+                Name = "Uzor",
+                Items = new List<string> { "Card", "Fruit", "Data", "Fights" },
+                IsActive = true
+            };
+        locations = new List<Location>
+        {
+             new Location
+            {
+                Id = 0,
+                Name = "Madagascar"
+            }, 
+            new Location
+            {
+                Id = 1,
+                Name = "Mauritus"
+            }, 
+            new Location
+            {
+                Id = 2,
+                Name = "Guyana"
+            }, new Location
+            {
+                Id = 3,
+                Name = "Papua New Guinea"
+            },
+        };
+    }
+
+    #region "View Models"
+    class Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<string> Items { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    class Location
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+    #endregion
+
+}
