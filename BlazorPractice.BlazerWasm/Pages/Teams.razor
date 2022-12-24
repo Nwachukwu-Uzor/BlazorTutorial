@@ -1,0 +1,18 @@
+﻿@page "/teams"
+<h3>TeamsComponent</h3>
+
+@code {
+    private List<Team> teams;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        teams = new List<Team>
+        {
+            new Team {Id = 1, Name = "Manchester", Region = "England"},
+            new Team {Id = 2, Name = "Madrid", Region = "Spain"},
+            new Team {Id = 3, Name = "Lisbon", Region = "Portugal"},
+            new Team {Id = 4, Name = "Dortmund", Region = "Germany"},
+            new Team {Id = 5, Name = "Turin", Region = "Italy"} ,
+        }
+    }
+}

@@ -1,8 +1,9 @@
 ﻿@page "/counter"
-
+@inherits DateTimeBaseComponent
 <PageTitle>Counter</PageTitle>
-
 <h1>Counter</h1>
+<br />
+<h4>Date: @CurrentDateTime</h4>
 
 <p role="status">Current count: @currentCount</p>
 

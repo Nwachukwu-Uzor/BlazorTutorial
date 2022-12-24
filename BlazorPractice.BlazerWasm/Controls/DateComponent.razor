@@ -1,0 +1,11 @@
+﻿<h3>DateComponent</h3>
+<p>@date.ToString("dd-MM-yyyy")</p>
+
+@code {
+    private DateTime date;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        date = DateTime.Now;
+    }
+}
