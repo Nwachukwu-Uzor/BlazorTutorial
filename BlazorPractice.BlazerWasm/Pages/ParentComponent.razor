@@ -1,0 +1,18 @@
+﻿@page "/eventcallbackcounter"
+
+<h3>ParentComponent</h3>
+<p>Count: @count</p>
+<EventCallBackCounter SetCurrentCount="SetCurrentCount" IncrementCount="IncrementByDelegate"></EventCallBackCounter>
+@code {
+    private int count;
+    private void SetCurrentCount(int value)
+    {
+        count = value;
+    }
+
+    private void IncrementByDelegate(int value)
+    {
+        count = value;
+        StateHasChanged();
+    }
+}

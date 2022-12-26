@@ -1,8 +1,14 @@
 ﻿@page "/order"
 <PageTitle>Order</PageTitle>
 <TitleComponent DepartmentName="Order"/>
+<DialogComponent @ref="dialog" />
+<button class="btn btn-secondary" @onclick="toggleModal">Toggle Dialog</button>
 
 @code {
-
+    private DialogComponent dialog;
+    public void toggleModal()
+    {
+        dialog.ToggleModal();
+    }
 }
 

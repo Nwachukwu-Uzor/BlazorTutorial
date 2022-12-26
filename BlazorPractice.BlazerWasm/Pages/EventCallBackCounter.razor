@@ -1,0 +1,25 @@
+﻿<PageHeaderComponent PageHeader="Event Callback Counter" />
+<button class="btn btn-primary" @onclick="Increment">Increment by Event Callback</button>
+<button class="btn btn-primary" @onclick="IncrementByDelegate">Increment by Delegate</button>
+
+@code {
+    private int currentCount;
+    [Parameter]
+    public EventCallback<int> SetCurrentCount { get; set; }
+
+    [Parameter]
+    public Action<int> IncrementCount { get; set; }
+
+    private void Increment()
+    {
+        currentCount++;
+        SetCurrentCount.InvokeAsync(currentCount);
+    }
+
+    private void IncrementByDelegate()
+    {
+        currentCount++;
+        IncrementCount.Invoke(currentCount);
+    }
+
+}

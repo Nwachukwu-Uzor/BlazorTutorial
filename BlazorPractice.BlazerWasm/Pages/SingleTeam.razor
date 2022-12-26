@@ -1,0 +1,99 @@
+﻿@page "/team/{id:int}"
+<PageHeaderComponent PageHeader="Team" />
+<h3 class="mb-2">Name: @team.Name</h3>
+<h4 class="mb-2">Region: @team.Region</h4>
+
+<h3 class="my-3">Member</h3>
+@if (members.Count == 0)
+{
+    <p>No members for this team yet!</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < members.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@members[i].Id</td>
+                    <td>@members[i].Name</td>
+                    <td>@members[i].Age</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private Team team;
+    private List<Member> members;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        var teams = new List<Team>
+        {
+            new Team {Id = 1, Name = "Manchester", Region = "England"},
+            new Team {Id = 2, Name = "Madrid", Region = "Spain"},
+            new Team {Id = 3, Name = "Lisbon", Region = "Portugal"},
+            new Team {Id = 4, Name = "Dortmund", Region = "Germany"},
+            new Team {Id = 5, Name = "Turin", Region = "Italy"} ,
+        };
+        var AllMembers = new List<Member>();
+        AllMembers.Add(new Member
+            {
+                Id = 1,
+                Name = "Uzor",
+                Age = 25,
+                TeamId = 1
+            });
+        AllMembers.Add(new Member
+            {
+                Id = 2,
+                Name = "Markus",
+                Age = 26,
+                TeamId = 2
+            });
+        AllMembers.Add(new Member
+            {
+                Id = 3,
+                Name = "David",
+                Age = 22,
+                TeamId = 1
+            });
+        AllMembers.Add(new Member
+            {
+                Id = 4,
+                Name = "Anita",
+                Age = 32,
+                TeamId = 1
+            });
+        AllMembers.Add(new Member
+            {
+                Id = 5,
+                Name = "Jennifer",
+                Age = 18,
+                TeamId = 3
+            });
+        AllMembers.Add(new Member
+            {
+                Id = 6,
+                Name = "Pablo",
+                Age = 40,
+                TeamId = 2
+            });
+        members = AllMembers.Where(member => member.TeamId == Id).ToList();
+        team = teams.FirstOrDefault(team => team.Id == Id);
+    }
+}

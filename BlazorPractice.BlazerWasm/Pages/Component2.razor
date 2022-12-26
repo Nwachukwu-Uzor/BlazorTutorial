@@ -1,0 +1,9 @@
+﻿<div class="my-2 bg-dark text-white p-2">
+    <PageHeaderComponent PageHeader="Component2" />
+    <p class="my-2">Current Count: @CurrentCount</p>
+</div>
+
+@code {
+    [CascadingParameter(Name = "Counter")]
+    public int CurrentCount { get; set; }
+}

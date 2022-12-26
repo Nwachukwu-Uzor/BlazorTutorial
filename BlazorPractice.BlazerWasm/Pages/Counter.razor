@@ -5,15 +5,26 @@
 <br />
 <h4>Date: @CurrentDateTime</h4>
 
-<p role="status">Current count: @currentCount</p>
+@*<p role="status">Current count: @currentCount</p>*@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="button" @onclick="showChild">Show Child</button>
+<CascadingValue Name="Counter" Value="@currentCount">
+    <Component1 @ref="child"/>
+</CascadingValue>
+
 
 @code {
     private int currentCount = 0;
+    private Component1 child;
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    private void showChild()
+    {
+        child.DisplayComponent();
     }
 }

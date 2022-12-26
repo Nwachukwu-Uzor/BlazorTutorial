@@ -1,0 +1,18 @@
+﻿
+@if(showComponent)
+{
+    <div class="my-2 bg-info text-white">
+        <PageHeaderComponent PageHeader="Component1" />
+        <Component2 />
+    </div>
+}
+
+
+@code {
+    private bool showComponent;
+    public void DisplayComponent()
+    {
+        showComponent = !showComponent;
+        StateHasChanged();
+    }
+}
