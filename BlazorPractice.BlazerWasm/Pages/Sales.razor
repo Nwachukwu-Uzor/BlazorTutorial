@@ -1,7 +1,28 @@
 ﻿@page "/sales"
 <PageTitle>Sales</PageTitle>
 <TitleComponent DepartmentName="Sales" />
+<br />
+<EditForm Model="user" OnValidSubmit="OnValidFormSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <InputText @bind-Value="user.Fullname" id="fullName"/>
+    <InputText @bind-Value="user.Username" id="username"/>
+    <InputText @bind-Value="user.Email" id="email"/>
+    <InputNumber @bind-Value="user.EmployeeNumber" id="employeeNumber" />
+    <button class="btn btn-primary" type="submit">Submit</button>
+</EditForm>
 
 @code {
+    private User user;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        user = new User();
 
+    }
+
+    private void OnValidFormSubmit()
+    {
+        Console.WriteLine($"Name: {user.Fullname}\nUsername: {user.Username}\nEmail: {user.Email}\nEmployee Number: {user.EmployeeNumber}");
+    }
 }

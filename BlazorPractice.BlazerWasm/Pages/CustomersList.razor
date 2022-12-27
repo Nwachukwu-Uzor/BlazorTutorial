@@ -1,0 +1,97 @@
+﻿@page "/customers"
+
+@using System.Timers
+
+<PageTitle>Customers</PageTitle>
+<PageHeaderComponent PageHeader="Customers"></PageHeaderComponent>
+<br />
+<p>Current Timer: @count</p>
+<button class="btn btn-danger" @onclick="StopTimer">Stop Timer</button>
+<br />
+<RepeaterComponent Items="customers" @ref="repeater">
+    <Header>
+        <h3>Customers</h3>
+    </Header>
+    <Row>
+        <div class="card my-2">
+            <div class="content">
+                <h4 class="ml-1 mb-1">@context.ContactName <span><button class="btn btn-dark" @onclick="() => Edit(context)">Edit</button></span></h4>
+                <h5 class="ml-5 mb-1">@context.CompanyName</h5>
+                <p class="ml-5 mb-1">@context.PhoneNumber</p>
+            </div>
+          
+        </div>
+    </Row>
+    <EditTemplate Context="currentCustomer">
+        <div class="form-control">
+            <input class="control" @bind-value="currentCustomer.CompanyName" @bind-value:event="oninput"/>
+        </div>
+        <div class="form-control">
+            <input class="control" @bind-value="currentCustomer.ContactName" @bind-value:event="oninput" />
+        </div>
+        <div class="form-control">
+            <input class="control" @bind-value="currentCustomer.PhoneNumber" @bind-value:event="oninput" />
+        </div>
+    </EditTemplate>
+</RepeaterComponent>
+
+@code {
+    private List<Customer> customers;
+    private RepeaterComponent<Customer> repeater;
+    private int count;
+    private Timer timer;
+
+    private void Edit(Customer customer)
+    {
+        repeater.ItemToEdit = customer;
+    }
+
+    private void StopTimer ()
+    {
+        timer.Stop();
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        customers = new List<Customer>();
+
+        customers.AddRange(new Customer[3]
+        {
+            new Customer
+            {
+                ContactName = "Martin Odegaard",
+                CompanyName = "Norwegian Shipping LLC",
+                PhoneNumber = "+234843222222"
+            },
+            new Customer
+            {
+                ContactName = "Stuart Pierce",
+                CompanyName = "KMPG",
+                PhoneNumber = "+234843222222"
+            },
+            new Customer
+            {
+                ContactName = "Alicia Morton",
+                CompanyName = "Adidas",
+                PhoneNumber = "+234843222222"
+            }
+        });
+
+        timer = new Timer(2000);
+        timer.Enabled = true;
+        timer.Elapsed += OnTimedEvent;
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        Console.WriteLine($"Component is render {DateTime.Now.ToString("dd:MM:yyyy:hh:mm:ss")}");
+    }
+
+    private void OnTimedEvent(object source, ElapsedEventArgs e)
+    {
+        count++;
+        StateHasChanged();
+    }
+}

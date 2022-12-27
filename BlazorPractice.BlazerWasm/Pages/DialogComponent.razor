@@ -7,6 +7,7 @@
         </header>
         <section class="modal-card-body">
             <!-- Content ... -->
+            @ModalContent
         </section>
         <footer class="modal-card-foot">
             <button class="button is-success">Save changes</button>
@@ -17,6 +18,8 @@
 
 @code {
     private bool showModal;
+    [Parameter]
+    public RenderFragment ModalContent { get; set; }
     public void ToggleModal()
     {
         showModal = !showModal;
