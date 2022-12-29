@@ -1,11 +1,14 @@
 ﻿@page "/counter"
+@implements IDisposable
+@inject CounterStore counterStore
+@inject IActionDispatcher actionDispatcher
+
 @inherits DateTimeBaseComponent
 <PageTitle>Counter</PageTitle>
-<h1>Counter</h1>
 <br />
 <h4>Date: @CurrentDateTime</h4>
 
-@*<p role="status">Current count: @currentCount</p>*@
+<p role="status">Current count: @counterStore.GetState().Count</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 <button class="button" @onclick="showChild">Show Child</button>
@@ -18,13 +21,28 @@
     private int currentCount = 0;
     private Component1 child;
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        counterStore.AddStateChangeListener(Update);
+    }
     private void IncrementCount()
     {
-        currentCount++;
+        actionDispatcher.Dispatch(new IncrementAction());
+    }
+
+    private void Update()
+    {
+        StateHasChanged();
     }
 
     private void showChild()
     {
         child.DisplayComponent();
+    }
+
+    public void Dispose()
+    {
+        counterStore.RemoveStateChangeListener(Update);
     }
 }

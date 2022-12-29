@@ -5,6 +5,7 @@ namespace BlazorPractice.BlazerWasm.Models
     public class Employee
     {
         public int Id { get; set; }
+        public Guid UserId { get; set; }
         [Required]
         [MinLength(15)]
         public string Name { get; set; }

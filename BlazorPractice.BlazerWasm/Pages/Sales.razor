@@ -1,4 +1,6 @@
 ﻿@page "/sales"
+@inject IEmployeeService employeeService
+
 <PageTitle>Sales</PageTitle>
 <TitleComponent DepartmentName="Sales" />
 <br />
@@ -12,13 +14,30 @@
     <button class="btn btn-primary" type="submit">Submit</button>
 </EditForm>
 
+<div class="card">
+    <div class="card-body">
+        <h4>Name: @employee.Name</h4>
+        <h5>Title: @employee.Title</h5>
+        <h5>Department: @employee.Department</h5>
+        <p>UserId: @employee.UserId</p>
+    </div>
+</div>
+
 @code {
     private User user;
+    private Employee employee;
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
         user = new User();
-
+        if(employee == null)
+        {
+            var random = new Random();
+            int number = random.Next(1, 4);
+            Console.WriteLine($"Number: {number}");
+            employee = employeeService.GetEmployeeById(number);
+        }
     }
 
     private void OnValidFormSubmit()
